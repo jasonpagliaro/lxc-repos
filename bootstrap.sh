@@ -50,7 +50,8 @@ list_apps() {
     local found=0
     for app_dir in "$APPS_DIR"/*; do
         if [ -d "$app_dir" ]; then
-            local app_name=$(basename "$app_dir")
+            local app_name
+            app_name=$(basename "$app_dir")
             local install_script="$app_dir/install.sh"
             
             if [ -f "$install_script" ]; then

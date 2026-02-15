@@ -107,7 +107,7 @@ wait_for_service() {
     
     log "Waiting for service at $host:$port (timeout: ${timeout}s)"
     
-    while [ $elapsed -lt $timeout ]; do
+    while [ $elapsed -lt "$timeout" ]; do
         if command_exists nc; then
             if nc -z "$host" "$port" 2>/dev/null; then
                 log "Service is ready"
