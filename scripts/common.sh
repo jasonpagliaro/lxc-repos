@@ -36,7 +36,16 @@ check_root() {
 # Install packages using apt
 install_package() {
     log "Installing packages: $*"
-    apt-get update -qq || die "Failed to update package list"
+    
+    # Only update if package cache is older than 1 hour
+    local update_stamp="/var/lib/apt/periodic/update-success-stamp"
+    if [ ! -f "$update_stamp" ] || [ "$(find "$update_stamp" -mmin +60 2>/dev/null)" ]; then
+        log "Updating package cache..."
+        apt-get update -qq || die "Failed to update package list"
+    else
+        log "Package cache is recent, skipping update"
+    fi
+    
     apt-get install -y "$@" || die "Failed to install packages: $*"
 }
 

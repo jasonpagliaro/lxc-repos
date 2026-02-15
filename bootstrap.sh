@@ -114,7 +114,7 @@ main() {
             exit 0
             ;;
         -*)
-            die "Unknown option: $1\nUse --help for usage information"
+            die "Unknown option: $1" 
             ;;
         *)
             install_app "$1"
